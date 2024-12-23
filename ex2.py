@@ -1,12 +1,12 @@
 from sklearn.linear_model import LinearRegression
 import numpy as np
-import Ej1
+import ex1
 
 print("---------- B1 ----------")
 
 # B.1 Import LinearRegression and fit the model
 model = LinearRegression()
-model.fit(Ej1.X, Ej1.Y)
+model.fit(ex1.X, ex1.Y)
 
 print("---------- B2 ----------")
 
@@ -23,8 +23,8 @@ print("Estimated intercept:", intercept_hat)
 # coinciding with the influential variables.
 
 # B.2.2 Rank of the design matrix
-rank_X = np.linalg.matrix_rank(Ej1.X)
-print("Size of X: ", len(Ej1.X), "x", len(Ej1.X[0]))
+rank_X = np.linalg.matrix_rank(ex1.X)
+print("Size of X: ", len(ex1.X), "x", len(ex1.X[0]))
 print("Rank of the design matrix X:", rank_X)
 
 # The matrix is full rank, this implies that all characteristics in X 
@@ -69,14 +69,14 @@ def quadratic_risk(X, Y, theta_star, num_simulations=1000, penalty=0):
     # Average the quadratic losses to approximate the quadratic risk
     return np.mean(quadratic_losses), quadratic_losses
 
-print("Quadratic Risk: ", quadratic_risk(Ej1.X, Ej1.Y, Ej1.theta_star)[0])
+print("Quadratic Risk: ", quadratic_risk(ex1.X, ex1.Y, ex1.theta_star)[0])
 
 print("---------- B4 ----------")
 
 # B.4: Modify μ for the first 5 features to 0, others to 10
-mu_modified = np.array([0]*5 + [10]*(Ej1.d-5))
-X_modified = np.random.multivariate_normal(mu_modified, Ej1.cov, size=Ej1.n)
-Y_modified = X_modified @ Ej1.theta_star + Ej1.epsilon
+mu_modified = np.array([0]*5 + [10]*(ex1.d-5))
+X_modified = np.random.multivariate_normal(mu_modified, ex1.cov, size=ex1.n)
+Y_modified = X_modified @ ex1.theta_star + ex1.epsilon
 
 model_modified = LinearRegression(fit_intercept=True)
 model_modified.fit(X_modified, Y_modified)
@@ -107,9 +107,9 @@ print("---------- B5 ----------")
 d_large = 200
 mu_large = np.zeros(d_large)
 cov_large = np.eye(d_large)
-X_large = np.random.multivariate_normal(mu_large, cov_large, size=Ej1.n)
+X_large = np.random.multivariate_normal(mu_large, cov_large, size=ex1.n)
 theta_star_large = np.array([10, 5, -3, -2, -1] + [0] * (d_large - 5))
-Y_large = X_large @ theta_star_large + Ej1.epsilon
+Y_large = X_large @ theta_star_large + ex1.epsilon
 
 model_large = LinearRegression(fit_intercept=True)
 model_large.fit(X_large, Y_large)
